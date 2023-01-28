@@ -1,14 +1,15 @@
+// Global Variables for DOM Elements
+var displayCurrentTime = $(`#currentDay`);
+
 // PSEUDOCODE
 
 // GIVEN I am using a daily planner to create a schedule
 
 // WHEN I open the planner
 // THEN the current day is displayed at the top of the calendar
-    // Insert DayJS script, make sure it exists
-        // Go to DayJS docs
-    // We want to use DayJS to diplay the current date
-    // Make variable, DayJS(), Set format for current date / time
-    // Set the current time to header / element in HTML
+
+var currentTime = dayjs().format(`dddd, MMMM D, YYYY`);
+displayCurrentTime.append(currentTime);
 
 // WHEN I scroll down
 // THEN I am presented with timeblocks for standard business hours
