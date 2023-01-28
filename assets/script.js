@@ -1,5 +1,15 @@
 // Global Variables for DOM Elements
-var displayCurrentTime = $(`#currentDay`);
+var displayCurrentDay = $(`#currentDay`);
+var hour9Div = $(`#hour-9`);
+var hour10Div = $(`#hour-10`);
+var hour11Div = $(`#hour-11`);
+var hour12Div = $(`#hour-12`);
+var hour13Div = $(`#hour-13`);
+var hour14Div = $(`#hour-14`);
+var hour15Div = $(`#hour-15`);
+var hour16Div = $(`#hour-16`);
+var hour17Div = $(`#hour-17`);
+
 
 // PSEUDOCODE
 
@@ -8,15 +18,59 @@ var displayCurrentTime = $(`#currentDay`);
 // WHEN I open the planner
 // THEN the current day is displayed at the top of the calendar
 
-var currentTime = dayjs().format(`dddd, MMMM D, YYYY`);
-displayCurrentTime.append(currentTime);
+var currentDay = dayjs().format(`dddd, MMMM D, YYYY`);
+displayCurrentDay.append(currentDay);
 
 // WHEN I scroll down
 // THEN I am presented with timeblocks for standard business hours
-    // Complete the rest of the timeblocks from the three that were given to us in the HTML file
-    // Remove static past, present and future classes
     // find a way to programmatically add or remove the appropriate class
     // Note: Colors need to shift at the START of a new hour. No worries about minutes. If hour = hour then color.
+
+var hours = [9, 10, 11, 12, 13, 14, 15, 16, 17];
+
+for (let i = 0; i < hours.length; i++) {
+    var hour = hours[i];
+    var currentHour = dayjs().hour();
+    if (hour === currentHour) {
+        hour9Div.addClass(`present`);
+        hour10Div.addClass(`present`);
+        hour11Div.addClass(`present`);
+        hour12Div.addClass(`present`);
+        hour13Div.addClass(`present`);
+        hour14Div.addClass(`present`);
+        hour15Div.addClass(`present`);
+        hour16Div.addClass(`present`);
+        hour17Div.addClass(`present`);
+    } else if (hour < currentHour) {
+        hour9Div.addClass(`past`);
+        hour10Div.addClass(`past`);
+        hour11Div.addClass(`past`);
+        hour12Div.addClass(`past`);
+        hour13Div.addClass(`past`);
+        hour14Div.addClass(`past`);
+        hour15Div.addClass(`past`);
+        hour16Div.addClass(`past`);
+        hour17Div.addClass(`past`);
+    }
+    else if (hour > currentHour)
+        hour9Div.addClass(`future`);
+        hour10Div.addClass(`future`);
+        hour11Div.addClass(`future`);
+        hour12Div.addClass(`future`);
+        hour13Div.addClass(`future`);
+        hour14Div.addClass(`future`);
+        hour15Div.addClass(`future`);
+        hour16Div.addClass(`future`);
+        hour17Div.addClass(`future`);
+}
+
+console.log(hours);
+
+// if (projectDate.isBefore(today)) {
+//     rowEl.addClass('project-late');
+//   } else if (projectDate.isSame(today)) {
+//     rowEl.addClass('project-today');
+//   }
 
 // WHEN I view the timeblocks for that day
 // THEN each timeblock is color coded to indicate whether it is in the past, present, or future
