@@ -9,6 +9,20 @@ var hour14Div = $(`#hour-14`);
 var hour15Div = $(`#hour-15`);
 var hour16Div = $(`#hour-16`);
 var hour17Div = $(`#hour-17`);
+var saveButtonEl = $(`.saveBtn`);
+
+var hour9 = 9;
+var hour10 = 10;
+var hour11 = 11;
+var hour12 = 12;
+var hour13 = 13;
+var hour14 = 14;
+var hour15 = 15;
+var hour16 = 16;
+var hour17 = 17;
+var hour = dayjs().hour();
+
+var hours = [9, 10, 11, 12, 13, 14, 15, 16, 17];
 
 
 // PSEUDOCODE
@@ -26,61 +40,81 @@ displayCurrentDay.append(currentDay);
     // find a way to programmatically add or remove the appropriate class
     // Note: Colors need to shift at the START of a new hour. No worries about minutes. If hour = hour then color.
 
-var hours = [9, 10, 11, 12, 13, 14, 15, 16, 17];
-
-for (let i = 0; i < hours.length; i++) {
-    var hour = hours[i];
-    var currentHour = dayjs().hour();
-    if (hour === currentHour) {
-        hour9Div.addClass(`present`);
-        hour10Div.addClass(`present`);
-        hour11Div.addClass(`present`);
-        hour12Div.addClass(`present`);
-        hour13Div.addClass(`present`);
-        hour14Div.addClass(`present`);
-        hour15Div.addClass(`present`);
-        hour16Div.addClass(`present`);
-        hour17Div.addClass(`present`);
-    } else if (hour < currentHour) {
-        hour9Div.addClass(`past`);
-        hour10Div.addClass(`past`);
-        hour11Div.addClass(`past`);
-        hour12Div.addClass(`past`);
-        hour13Div.addClass(`past`);
-        hour14Div.addClass(`past`);
-        hour15Div.addClass(`past`);
-        hour16Div.addClass(`past`);
-        hour17Div.addClass(`past`);
-    }
-    else if (hour > currentHour)
-        hour9Div.addClass(`future`);
-        hour10Div.addClass(`future`);
-        hour11Div.addClass(`future`);
-        hour12Div.addClass(`future`);
-        hour13Div.addClass(`future`);
-        hour14Div.addClass(`future`);
-        hour15Div.addClass(`future`);
-        hour16Div.addClass(`future`);
-        hour17Div.addClass(`future`);
-}
-
-console.log(hours);
-
-// if (projectDate.isBefore(today)) {
-//     rowEl.addClass('project-late');
-//   } else if (projectDate.isSame(today)) {
-//     rowEl.addClass('project-today');
-//   }
-
 // WHEN I view the timeblocks for that day
 // THEN each timeblock is color coded to indicate whether it is in the past, present, or future
     // Hiding and showing the pre-defined classes
     // If time is >=< current time, then those classes get applied
     // Do we need to set standard business hours?
 
+
+if (dayjs(hour).isAfter(hour9)) {
+    hour9Div.addClass(`past`);
+} else if (dayjs(hour).isBefore(hour9)) {
+    hour9Div.addClass(`future`);
+} else if (dayjs(hour).isSame(hour9))
+    hour9Div.addClass(`present`);
+
+if (dayjs(hour).isAfter(hour10)) {
+    hour10Div.addClass(`past`);
+} else if (dayjs(hour).isBefore(hour10)) {
+    hour10Div.addClass(`future`);
+} else if (dayjs(hour).isSame(hour10))
+    hour10Div.addClass(`present`);
+
+if (dayjs(hour).isAfter(hour11)) {
+    hour11Div.addClass(`past`);
+} else if (dayjs(hour).isBefore(hour11)) {
+    hour11Div.addClass(`future`);
+} else if (dayjs(hour).isSame(hour11))
+    hour11Div.addClass(`present`);
+
+if (dayjs(hour).isAfter(hour12)) {
+    hour12Div.addClass(`past`);
+} else if (dayjs(hour).isBefore(hour12)) {
+    hour12Div.addClass(`future`);
+} else if (dayjs(hour).isSame(hour12))
+    hour12Div.addClass(`present`);
+
+if (dayjs(hour).isAfter(hour13)) {
+    hour13Div.addClass(`past`);
+} else if (dayjs(hour).isBefore(hour13)) {
+    hour13Div.addClass(`future`);
+} else if (dayjs(hour).isSame(hour13))
+    hour13Div.addClass(`present`);
+
+if (dayjs(hour).isAfter(hour14)) {
+    hour14Div.addClass(`past`);
+} else if (dayjs(hour).isBefore(hour14)) {
+    hour14Div.addClass(`future`);
+} else if (dayjs(hour).isSame(hour14))
+    hour14Div.addClass(`present`);
+
+if (dayjs(hour).isAfter(hour15)) {
+    hour15Div.addClass(`past`);
+} else if (dayjs(hour).isBefore(hour15)) {
+    hour15Div.addClass(`future`);
+} else if (dayjs(hour).isSame(hour15))
+    hour15Div.addClass(`present`);
+
+if (dayjs(hour).isAfter(hour16)) {
+    hour16Div.addClass(`past`);hour
+} else if (dayjs(hour).isBefore(hour16)) {
+    hour16Div.addClass(`future`);
+} else if (dayjs(hour).isSame(hour16))
+    hour16Div.addClass(`present`);
+
+if (dayjs(hour).isAfter(hour17)) {
+    hour17Div.addClass(`past`);
+} else if (dayjs(hour).isBefore(hour17)) {
+    hour17Div.addClass(`future`);
+} else if (dayjs(hour).isSame(hour17))
+    hour17Div.addClass(`present`);
+
+
 // WHEN I click into a timeblock
 // THEN I can enter an event
     //Grab text input (text areas)
+
 
 // WHEN I click the save button for that timeblock
 // THEN the text for that event is saved in local storage
@@ -107,7 +141,7 @@ console.log(hours);
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
-$(function () {
+$(function init () {
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
