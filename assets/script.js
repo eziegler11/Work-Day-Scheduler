@@ -125,19 +125,28 @@ function textInput(event) {
     var savedTimeBlock = $(this).parent().attr('id');
     console.log(savedTimeBlock);
     
-// Then need to save that variable to an object, with the key as the hour and the value as the input. Then save both to local storage
-    var scheduleInputs = {
-        hour: savedTimeBlock,
-        value: hourlyDescription,
-    };
+// Save the key as the hour and the value as the input and store in local storage
+
+    var schedule = localStorage.setItem(savedTimeBlock, hourlyDescription); 
+    
+    var schedule = localStorage.getItem(savedTimeBlock);
+    console.log(schedule);
+    description.text(schedule);
+
+
+
+    // var scheduleInputs = {
+    //     hour: savedTimeBlock,
+    //     value: hourlyDescription,
+    // };
 
     // add project to local storage
-    var schedule = readScheduleFromStorage();
-    schedule.push(scheduleInputs);
-    saveScheduleToStorage(schedule);
+    // var schedule = readScheduleFromStorage();
+    // schedule.push(scheduleInputs);
+    // saveScheduleToStorage();
 
   // print project data
-    printScheduleData();
+    // printScheduleData();
 
 }
 
@@ -159,20 +168,28 @@ saveButtonEl.on(`click`, textInput);
 // Reads projects from local storage and returns array of project objects.
 // Returns an empty array ([]) if there aren't any projects.
 // projects = schedule
-function readScheduleFromStorage() {
-    var schedule = localStorage.getItem('schedule');
-    if (schedule) {
-      schedule = JSON.parse(schedule);
-    } else {
-      schedule = [];
-    }
-    return schedule;
-}
+
+
+// function readScheduleFromStorage() {
+//     var schedule = localStorage.getItem(savedTimeBlock);
+//     console.log(schedule);
+//     description.text(schedule);
+
+//     var schedule = JSON.parse(localStorage.getItem(savedTimeBlock, hourlyDescription));
+//     console.log(schedule);
+//     var schedule = localStorage.getItem('schedule');
+//     if (schedule) {
+//       schedule = JSON.parse(schedule);
+//     } else {
+//       schedule = [];
+//     }
+//     return schedule;
+// }
 
 // Takes an array of schedules and saves them in localStorage.
-function saveScheduleToStorage(schedule) {
-    localStorage.setItem('schedule', JSON.stringify(schedule));
-}
+// function saveScheduleToStorage() {
+//     localStorage.setItem('savedTimeBlock', JSON.stringify(schedule));
+// }
 
 // Gets schedule data from local storage and displays it
 function printScheduleData() {
@@ -181,10 +198,10 @@ function printScheduleData() {
     description.empty();
   
     // get schedule from localStorage
-    var schedule = readScheduleFromStorage();
+    readScheduleFromStorage();
 }
 
-printScheduleData();
+// printScheduleData();
 // Key value pair: key = hour & value = input
 // Refer to mini project
 // Activity 10, multiple save buttons - event delegation on each button needs to be unique, to know which to save it to
