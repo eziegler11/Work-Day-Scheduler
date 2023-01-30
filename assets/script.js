@@ -1,5 +1,6 @@
 // Global Variables for DOM Elements
 var displayCurrentDay = $(`#currentDay`);
+var rootEl = $(`#wrapper`);
 var hour9Div = $(`#hour-9`);
 var hour10Div = $(`#hour-10`);
 var hour11Div = $(`#hour-11`);
@@ -10,6 +11,7 @@ var hour15Div = $(`#hour-15`);
 var hour16Div = $(`#hour-16`);
 var hour17Div = $(`#hour-17`);
 var saveButtonEl = $(`.saveBtn`);
+// var descriptionInput = $(`.description`);
 
 var hour9 = 9;
 var hour10 = 10;
@@ -21,9 +23,6 @@ var hour15 = 15;
 var hour16 = 16;
 var hour17 = 17;
 var hour = dayjs().hour();
-
-var hours = [9, 10, 11, 12, 13, 14, 15, 16, 17];
-
 
 // PSEUDOCODE
 
@@ -114,14 +113,29 @@ if (dayjs(hour).isAfter(hour17)) {
 // WHEN I click into a timeblock
 // THEN I can enter an event
     //Grab text input (text areas)
+function textInput(event) {
+    event.preventDefault();
 
+// Grabs text input of .description class
+// Is only grabbing the 1st value at 9 AM...
+    var hourlyDescription = rootEl.children().children().eq(1).val();
+    console.log(hourlyDescription)
+
+// Then need to save that variable to an object, with the key as the hour and the value as the input. Then save both to local storage
+
+
+// Attempting to figure out, when you click the save button, whichever DIV the save button is located in, it will return the ID of that element or save the variable in the object above.
+    var savedTimeBlock = $(this).parent().attr('id');
+    console.log(savedTimeBlock);
+}
 
 // WHEN I click the save button for that timeblock
 // THEN the text for that event is saved in local storage
     // EventListener on the save button
     // Create variable (can be global), get the value
     // Set it to local storage (what will this data look like?)
-        // 
+    
+saveButtonEl.on(`click`, textInput);
 
 // WHEN I refresh the page
 // THEN the saved events persist (confirms that data was entered into LocalStorage)
