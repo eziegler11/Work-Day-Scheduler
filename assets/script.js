@@ -1,6 +1,5 @@
 // Global Variables for DOM Elements
 var displayCurrentDay = $(`#currentDay`);
-var rootEl = $(`#wrapper`);
 var hour9Div = $(`#hour-9`);
 var hour10Div = $(`#hour-10`);
 var hour11Div = $(`#hour-11`);
@@ -11,7 +10,7 @@ var hour15Div = $(`#hour-15`);
 var hour16Div = $(`#hour-16`);
 var hour17Div = $(`#hour-17`);
 var saveButtonEl = $(`.saveBtn`);
-// var descriptionInput = $(`.description`);
+var description = $(`.description`);
 
 var hour9 = 9;
 var hour10 = 10;
@@ -22,7 +21,7 @@ var hour14 = 14;
 var hour15 = 15;
 var hour16 = 16;
 var hour17 = 17;
-var hour = dayjs().hour();
+var currentHour = dayjs().hour();
 
 // PSEUDOCODE
 
@@ -46,67 +45,67 @@ displayCurrentDay.append(currentDay);
     // Do we need to set standard business hours?
 
 
-if (dayjs(hour).isAfter(hour9)) {
+if (dayjs(currentHour).isAfter(hour9)) {
     hour9Div.addClass(`past`);
-} else if (dayjs(hour).isBefore(hour9)) {
+} else if (dayjs(currentHour).isBefore(hour9)) {
     hour9Div.addClass(`future`);
-} else if (dayjs(hour).isSame(hour9))
+} else if (dayjs(currentHour).isSame(hour9))
     hour9Div.addClass(`present`);
 
-if (dayjs(hour).isAfter(hour10)) {
+if (dayjs(currentHour).isAfter(hour10)) {
     hour10Div.addClass(`past`);
-} else if (dayjs(hour).isBefore(hour10)) {
+} else if (dayjs(currentHour).isBefore(hour10)) {
     hour10Div.addClass(`future`);
-} else if (dayjs(hour).isSame(hour10))
+} else if (dayjs(currentHour).isSame(hour10))
     hour10Div.addClass(`present`);
 
-if (dayjs(hour).isAfter(hour11)) {
+if (dayjs(currentHour).isAfter(hour11)) {
     hour11Div.addClass(`past`);
-} else if (dayjs(hour).isBefore(hour11)) {
+} else if (dayjs(currentHour).isBefore(hour11)) {
     hour11Div.addClass(`future`);
-} else if (dayjs(hour).isSame(hour11))
+} else if (dayjs(currentHour).isSame(hour11))
     hour11Div.addClass(`present`);
 
-if (dayjs(hour).isAfter(hour12)) {
+if (dayjs(currentHour).isAfter(hour12)) {
     hour12Div.addClass(`past`);
-} else if (dayjs(hour).isBefore(hour12)) {
+} else if (dayjs(currentHour).isBefore(hour12)) {
     hour12Div.addClass(`future`);
-} else if (dayjs(hour).isSame(hour12))
+} else if (dayjs(currentHour).isSame(hour12))
     hour12Div.addClass(`present`);
 
-if (dayjs(hour).isAfter(hour13)) {
+if (dayjs(currentHour).isAfter(hour13)) {
     hour13Div.addClass(`past`);
-} else if (dayjs(hour).isBefore(hour13)) {
+} else if (dayjs(currentHour).isBefore(hour13)) {
     hour13Div.addClass(`future`);
-} else if (dayjs(hour).isSame(hour13))
+} else if (dayjs(currentHour).isSame(hour13))
     hour13Div.addClass(`present`);
 
-if (dayjs(hour).isAfter(hour14)) {
+if (dayjs(currentHour).isAfter(hour14)) {
     hour14Div.addClass(`past`);
-} else if (dayjs(hour).isBefore(hour14)) {
+} else if (dayjs(currentHour).isBefore(hour14)) {
     hour14Div.addClass(`future`);
-} else if (dayjs(hour).isSame(hour14))
+} else if (dayjs(currentHour).isSame(hour14))
     hour14Div.addClass(`present`);
 
-if (dayjs(hour).isAfter(hour15)) {
+if (dayjs(currentHour).isAfter(hour15)) {
     hour15Div.addClass(`past`);
-} else if (dayjs(hour).isBefore(hour15)) {
+} else if (dayjs(currentHour).isBefore(hour15)) {
     hour15Div.addClass(`future`);
-} else if (dayjs(hour).isSame(hour15))
+} else if (dayjs(currentHour).isSame(hour15))
     hour15Div.addClass(`present`);
 
-if (dayjs(hour).isAfter(hour16)) {
+if (dayjs(currentHour).isAfter(hour16)) {
     hour16Div.addClass(`past`);hour
-} else if (dayjs(hour).isBefore(hour16)) {
+} else if (dayjs(currentHour).isBefore(hour16)) {
     hour16Div.addClass(`future`);
-} else if (dayjs(hour).isSame(hour16))
+} else if (dayjs(currentHour).isSame(hour16))
     hour16Div.addClass(`present`);
 
-if (dayjs(hour).isAfter(hour17)) {
+if (dayjs(currentHour).isAfter(hour17)) {
     hour17Div.addClass(`past`);
-} else if (dayjs(hour).isBefore(hour17)) {
+} else if (dayjs(currentHour).isBefore(hour17)) {
     hour17Div.addClass(`future`);
-} else if (dayjs(hour).isSame(hour17))
+} else if (dayjs(currentHour).isSame(hour17))
     hour17Div.addClass(`present`);
 
 
@@ -117,16 +116,29 @@ function textInput(event) {
     event.preventDefault();
 
 // Grabs text input of .description class
-// Is only grabbing the 1st value at 9 AM...
-    var hourlyDescription = rootEl.children().children().eq(1).val();
+
+    var hourlyDescription = $(this).siblings('.description').val().trim();
     console.log(hourlyDescription)
 
-// Then need to save that variable to an object, with the key as the hour and the value as the input. Then save both to local storage
+// Returns the ID of the DIV, in which the text & save button are clicked, in order to save to local storage
 
-
-// Attempting to figure out, when you click the save button, whichever DIV the save button is located in, it will return the ID of that element or save the variable in the object above.
     var savedTimeBlock = $(this).parent().attr('id');
     console.log(savedTimeBlock);
+    
+// Then need to save that variable to an object, with the key as the hour and the value as the input. Then save both to local storage
+    var scheduleInputs = {
+        hour: savedTimeBlock,
+        value: hourlyDescription,
+    };
+
+    // add project to local storage
+    var schedule = readScheduleFromStorage();
+    schedule.push(scheduleInputs);
+    saveScheduleToStorage(schedule);
+
+  // print project data
+    printScheduleData();
+
 }
 
 // WHEN I click the save button for that timeblock
@@ -144,6 +156,35 @@ saveButtonEl.on(`click`, textInput);
     // To have it display as the string it was entered as
     // Input above the hours to confirm, that when the save button is pushed it is stored in localStorage
 
+// Reads projects from local storage and returns array of project objects.
+// Returns an empty array ([]) if there aren't any projects.
+// projects = schedule
+function readScheduleFromStorage() {
+    var schedule = localStorage.getItem('schedule');
+    if (schedule) {
+      schedule = JSON.parse(schedule);
+    } else {
+      schedule = [];
+    }
+    return schedule;
+}
+
+// Takes an array of schedules and saves them in localStorage.
+function saveScheduleToStorage(schedule) {
+    localStorage.setItem('schedule', JSON.stringify(schedule));
+}
+
+// Gets schedule data from local storage and displays it
+function printScheduleData() {
+
+    // clear current schedules on the page
+    description.empty();
+  
+    // get schedule from localStorage
+    var schedule = readScheduleFromStorage();
+}
+
+printScheduleData();
 // Key value pair: key = hour & value = input
 // Refer to mini project
 // Activity 10, multiple save buttons - event delegation on each button needs to be unique, to know which to save it to
